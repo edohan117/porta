@@ -5,15 +5,43 @@
         <router-link to="/" class="logo-link">Fuse ESCAPE</router-link>
       </div>
       <nav class="nav">
-        <router-link to="/rcmdThemeList" class="nav-link">추천/신규♤</router-link>
-        <router-link to="/roomList" class="nav-link">LIST◇</router-link>
-        <router-link to="/roomRank" class="nav-link">RANKING test♡</router-link>
+        <!-- 드롭다운 -->
+        <div class="dropdown">
+          <span 
+            class="nav-link dropdown-toggle" 
+            @click="toggleDropdown"
+          >
+            카테고리
+          </span>
+          <!-- 드롭다운 메뉴 -->
+          <ul 
+            class="dropdown-menu" 
+            v-if="dropdownOpen"
+          >
+            <li><router-link to="/category/news" class="dropdown-item" @click="closeDropdown">뉴스</router-link></li>
+            <li><router-link to="/category/shopping" class="dropdown-item" @click="closeDropdown">쇼핑</router-link></li>
+            <li><router-link to="/category/entertainment" class="dropdown-item" @click="closeDropdown">엔터테인먼트</router-link></li>
+            <li><router-link to="/category/learning" class="dropdown-item" @click="closeDropdown">학습 자료</router-link></li>
+          </ul>
+        </div>
+        <router-link to="/roomList" class="nav-link">추천</router-link>
+        <router-link to="/roomRank" class="nav-link">즐겨찾기</router-link>
         <router-link to="/noticeList" class="nav-link">공지사항</router-link>
         <router-link to="/inquiries" class="nav-link">문의하기</router-link>
         <div v-if="roleAdmin">
           <router-link to="/inquiriesList" class="nav-link">문의목록</router-link>
         </div>
       </nav>
+      <div class="search-bar">
+        <input
+          type="text"
+          v-model="searchQuery"
+          placeholder="검색어를 입력하세요"
+          class="search-input"
+          @keyup.enter="handleSearch"
+        />
+        <button @click="handleSearch" class="btn-search">검색</button>
+      </div>
       <div class="auth">
         <div v-if="isLoggedIn && user && user.id" class="user-profile" @click="toggleProfileMenu">
           <span class="sessionId">{{ user.nickname }} 님</span>
@@ -50,17 +78,35 @@ import { useRouter } from 'vue-router';
 
 export default {
   name: 'Header',
+  emits: ['search'],
   setup() {
     const store = useStore();
     const router = useRouter();
-
+    
     const isLoggedIn = computed(() => store.getters.isAuthenticated);
     const user = computed(() => store.getters.user);
     const role = computed(() => store.getters.role);
-
+    
     const isMenuOpen = ref(false);
     const profileMenuOpen = ref(false);
     const isScrolled = ref(false);
+    const dropdownOpen = ref(false);
+    const searchQuery = ref('');
+
+    // 드롭다운 메뉴를 보여줌
+    const showDropdown = () => {
+      dropdownOpen.value = true;
+    };
+
+    // 드롭다운 메뉴를 숨김
+    const hideDropdown = () => {
+      dropdownOpen.value = false;
+    };
+
+    // 드롭다운 유지
+    const keepDropdown = () => {
+      dropdownOpen.value = true;
+    };
 
     const goToLogin = () => {
       router.push('/loginForm');
@@ -94,20 +140,50 @@ export default {
       profileMenuOpen.value = !profileMenuOpen.value;
     };
 
+    const closeDropdown = () => {
+      dropdownOpen.value = false;
+    };
 
     const handleScroll = () => {
       isScrolled.value = window.scrollY > 50;
     };
 
     onMounted(() => {
+      window.addEventListener('click', handleClickOutside);
       window.addEventListener('scroll', handleScroll);
     });
 
     onUnmounted(() => {
+      window.removeEventListener('click', handleClickOutside);
       window.removeEventListener('scroll', handleScroll);
     });
+    
+    const toggleDropdown = () => {
+    dropdownOpen.value = !dropdownOpen.value;
+    };
 
+    const handleClickOutside = (event) => {
+      const dropdownElement = document.querySelector('.dropdown');
+      if (dropdownElement && !dropdownElement.contains(event.target)) {
+        dropdownOpen.value = false;
+      }
+    };
+
+    const handleSearch = () => {
+      if (searchQuery.value.trim()) {
+        router.push({ path: '/search', query: { q: searchQuery.value } });
+        searchQuery.value = ''; // 검색창 초기화
+      }
+    };
     return {
+      closeDropdown,
+      showDropdown,
+      hideDropdown,
+      dropdownOpen,
+      keepDropdown,
+      toggleDropdown,
+      searchQuery,
+      handleSearch,
       isLoggedIn,
       user,
       role,
@@ -329,4 +405,80 @@ export default {
   text-overflow: ellipsis;
   /* 필요 시 말줄임표 표시 */
 }
+
+/* 드롭다운 메뉴 스타일 */
+/* 드롭다운 스타일 */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+  color: #fff;
+  text-decoration: none;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #333;
+  border: 1px solid #444;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column; /* 세로 정렬 */
+  width: 200px; /* 적당한 넓이 설정 */
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem; /* 상하 간격과 좌우 여백 설정 */
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+.dropdown-item:hover {
+  background-color: #444;
+}
+
+/* 드롭다운 메뉴 안의 텍스트를 중앙 정렬 */
+.dropdown-item {
+  text-align: left; /* 텍스트가 자연스럽게 좌측 정렬되도록 설정 */
+  display: block; /* 블록 레벨 요소로 변경 */
+}
+
+/* 드롭다운 메뉴 간격 조정 */
+.dropdown-item:not(:last-child) {
+  border-bottom: 1px solid #444; /* 메뉴 항목 구분선 추가 */
+}
+
+/* 검색창 스타일 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.search-input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-search {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #3498db;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-search:hover {
+  background-color: #2980b9;
+}
+
+
 </style>
