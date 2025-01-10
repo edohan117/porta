@@ -12,13 +12,14 @@
           <li><a href="/sitemap">사이트맵</a></li>
           <li><a href="/terms">이용 약관</a></li>
           <li><a href="/privacy">개인정보 처리방침</a></li>
-          <li><a href="/support">고객 지원</a></li>
+          <li><a href="/support">고객 지원2</a></li>
         </ul>
       </div>
       <div class="footer-section social">
         <h3>소셜 미디어</h3>
         <div class="social-icons">
-          <a href="https://www.instagram.com/inno_nest_dohan/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/inno_nest_dohan/" aria-label="Instagram" target="_blank"
+            rel="noopener noreferrer">
             <i class="bi bi-instagram"></i>
           </a>
           <a href="https://twitter.com/" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
