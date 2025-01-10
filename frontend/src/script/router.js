@@ -20,7 +20,7 @@ import Inquiries from '@/views/Inquiries.vue';
 import RoomReviews from '@/views/RoomReviews.vue';
 
 const routes = [
-  { path: '/', name: 'Home', component: Home, meta: { title: 'FuseEscape' } },
+  { path: '/', name: 'Home', component: Home, meta: { title: 'Porta' } },
   { path: '/loginForm', name: 'LoginForm', component: LoginForm, meta: { title: '로그인' } },
   { path: '/roomList', name: 'RoomList', component: RoomList, meta: { title: '방탈출 목록' } },
   { path: '/myLikes', name: 'MyLikes', component: MyLikes, meta: { title: '나의 좋아요' } },

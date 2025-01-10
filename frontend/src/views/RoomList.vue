@@ -1,36 +1,23 @@
 <template>
   <section class="room-list">
-    <h2>Room Showcase</h2>
+    <h2>Showcase</h2>
     <div v-if="roleAdmin" class="edit-delete-buttons">
       <div class="add-room-button">
         <router-link to="/roomSubmit" class="btn btn-primary">
-          새 방 등록
+          새 사이트 등록
         </router-link>
       </div>
     </div>
     <div class="search-container">
       <div class="search-input-wrapper">
-        <input
-          type="text"
-          v-model="searchKeyword"
-          placeholder="검색어를 입력하세요"
-          class="search-input"
-          @keyup.enter="fetchRoomList"
-        />
+        <input type="text" v-model="searchKeyword" placeholder="검색어를 입력하세요" class="search-input"
+          @keyup.enter="fetchRoomList" />
       </div>
       <div class="select-wrapper">
         <select v-model="selectedRegion" class="search-select">
-          <option value="">지역을 선택하세요</option>
+          <option value="">카테고리를 선택하세요</option>
           <option v-for="region in regions" :key="region.CODE_VAL" :value="region.CODE_VAL">
             {{ region.CODE_NM }}
-          </option>
-        </select>
-      </div>
-      <div class="select-wrapper">
-        <select v-model="selectedGenre" class="search-select">
-          <option value="">장르를 선택하세요</option>
-          <option v-for="genre in genres" :key="genre.CODE_VAL" :value="genre.CODE_VAL">
-            {{ genre.CODE_NM }}
           </option>
         </select>
       </div>
@@ -40,47 +27,27 @@
     </div>
 
     <div class="room-grid">
-      <router-link
-        v-for="room in paginatedRooms"
-        :key="room.ID"
-        :to="{ name: 'RoomDetail', params: { id: room.ID } }"
-        class="room-card-link"
-      >
+      <router-link v-for="room in paginatedRooms" :key="room.ID" :to="{ name: 'RoomDetail', params: { id: room.ID } }"
+        class="room-card-link">
         <article class="room-card">
           <div class="room-image-container">
-            <img
-              v-if="room.IMG_PATH"
-              :src="room.IMG_PATH"
-              :alt="room.THEME_NM"
-              class="room-image"
-              @error="onImageError(room.ID)"
-            />
-            <img
-              v-else
-              src="/api/placeholder/150/150"
-              :alt="room.THEME_NM"
-              class="room-image placeholder"
-            />
+            <img v-if="room.IMG_PATH" :src="room.IMG_PATH" :alt="room.THEME_NM" class="room-image"
+              @error="onImageError(room.ID)" />
+            <img v-else src="/api/placeholder/150/150" :alt="room.THEME_NM" class="room-image placeholder" />
           </div>
-          <div class="room-info">
+          <div class="room-details">
             <h3 class="room-title">{{ room.THEME_NM }}</h3>
-            <p class="room-content">{{ room.ROOM_NM }}</p>
-            <div class="room-meta">
-              <span class="room-genre">장르: {{ room.GENRE_NM }}</span>
-              <span class="room-party">추천 인원: {{ room.MIN_PARTY }}-{{ room.MAX_PARTY }}명</span>
-              <span class="room-time">시간: {{ room.RUN_TIME }}분</span>
-              <span class="room-price">{{ room.PRICE }}원</span>
+            <div class="room-tags">
+              <span class="room-tag">{{ room.GENRE_NM }}</span>
+              <span class="room-tag">{{ room.MIN_PARTY }}-{{ room.MAX_PARTY }}명</span>
+              <span class="room-tag">{{ room.PRICE }}원</span>
             </div>
           </div>
         </article>
       </router-link>
     </div>
 
-    <Pagination
-      :currentPage="currentPage"
-      :totalPages="totalPages"
-      @page-changed="changePage"
-    />
+    <Pagination :currentPage="currentPage" :totalPages="totalPages" @page-changed="changePage" />
   </section>
 </template>
 
@@ -99,7 +66,7 @@ export default {
     return {
       rooms: [],
       currentPage: 1,
-      pageSize: 6,
+      pageSize: 35,
       searchKeyword: '',
       selectedRegion: '',
       selectedGenre: '',
@@ -227,8 +194,8 @@ h2 {
 
 .room-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
 }
 
 .room-card-link {
@@ -238,66 +205,87 @@ h2 {
 
 .room-card {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   background-color: #fff;
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  text-align: center;
 }
 
 .room-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 .room-image-container {
-  flex-shrink: 0;
-  width: 100px;  /* 고정 너비 */
-  height: 150px; /* 고정 높이 */
-  overflow: hidden; /* 잘리지 않게 숨김 처리 */
-  border-radius: 12px; /* 컨테이너에 둥글게 하기 */
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .room-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 비율을 유지하며 잘림 */
-  border-radius: 12px; /* 이미지에 둥글게 하기 */
+  object-fit: cover;
+}
+
+.room-details {
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  width: 100%;
 }
 
 .room-image.placeholder {
-  object-fit: contain; /* 기본 이미지 비율 유지 */
+  object-fit: contain;
+  /* 기본 이미지 비율 유지 */
   padding: 1rem;
   background-color: #f0f0f0;
 }
 
 .room-info {
-  flex-grow: 1;
-  padding: 1rem;
+  padding: 0.5rem;
+  /* 패딩을 조금 줄임 */
   display: flex;
   flex-direction: column;
 }
 
+.room-tags {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.room-tag {
+  font-size: 0.75rem;
+  /* 태그 글꼴 크기 줄이기 */
+  color: #555;
+  background-color: #ecf0f1;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+}
+
 .room-title {
-  font-size: 1.2rem;
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin: 0.3rem 0;
+  color: #333;
 }
 
 .room-content {
-  font-size: 1rem;
-  color: #34495e;
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
-  flex-grow: 1;
+  font-size: 0.9rem;
+  /* 내용 크기 감소 */
+  line-height: 1.3;
 }
 
 .room-meta {
-  font-size: 0.9rem;
-  color: #7f8c8d;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  font-size: 0.8rem;
+  /* 메타 정보 크기 감소 */
 }
 
 .room-meta span {
@@ -306,27 +294,32 @@ h2 {
   border-radius: 4px;
 }
 
-@media (max-width: 600px) {
-  .room-card {
-    flex-direction: column; /* 모바일에서 세로로 쌓임 */
+@media (max-width: 768px) {
+  .room-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    /* 작은 화면에서는 최소 100px로 조정 */
+    gap: 0.8rem;
   }
 
   .room-image-container {
-    width: 100%; /* 너비를 100%로 설정 */
-    height: 200px; /* 높이 조정 */
+    height: 100px;
+    /* 모바일에서 이미지 크기 줄이기 */
   }
 
-  .room-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* 여기 수정 */
+  .room-title {
+    font-size: 0.8rem;
+  }
+
+  .room-tag {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.2rem;
   }
 }
 
 .search-container {
   display: flex;
-  flex-wrap: wrap;  /* 요소들이 줄 바꿈 할 수 있도록 설정 */
-  gap: 2px;  /* 요소 간의 간격을 줄여서 겹침 방지 */
+  flex-wrap: wrap;
+  gap: 2px;
   margin-bottom: 30px;
   padding: 20px;
   background-color: #f8f9fa;
@@ -336,14 +329,14 @@ h2 {
 
 .search-input-wrapper,
 .select-wrapper {
-  flex: 1; /* 각 요소가 가능한 공간을 균등하게 차지 */
-  min-width: 150px; /* 최소 너비를 설정하여 너무 좁아지지 않도록 함 */
+  flex: 1;
+  min-width: 150px;
   position: relative;
 }
 
 .search-input {
-  width: 84%; /* 너비를 100%로 설정 */
-  padding: 12px; /* 상하 패딩 */
+  width: 84%;
+  padding: 12px;
   border: 1px solid #ced4da;
   border-radius: 5px;
   font-size: 16px;
@@ -352,16 +345,16 @@ h2 {
 }
 
 .search-select {
-  width: 95%; /* 너비를 100%로 설정 */
-  padding: 12px; /* 상하 패딩 */
+  width: 95%;
+  padding: 12px;
   border: 1px solid #ced4da;
   border-radius: 5px;
   font-size: 16px;
   transition: border-color 0.3s;
-  -webkit-appearance: none; /* Safari 및 Chrome의 기본 스타일 제거 */
-  -moz-appearance: none; /* Firefox의 기본 스타일 제거 */
-  appearance: none; /* 모든 브라우저의 기본 스타일 제거 */
-  background-color: white; /* 배경 색 설정 (선택 사항) */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: white;
 }
 
 .search-input:focus,
@@ -372,17 +365,17 @@ h2 {
 }
 
 .select-wrapper::after {
-  content: ''; /* 화살표 아이콘 대체 */
+  content: '';
   position: absolute;
-  right: 30px; /* 오른쪽에서 간격 설정 */
-  top: 50%; /* 세로 중앙 정렬 */
-  transform: translateY(-50%); /* 세로 중앙 정렬 */
-  width: 0; 
-  height: 0; 
-  border-left: 5px solid transparent; /* 화살표 모양을 만들기 위해 */
-  border-right: 5px solid transparent; /* 화살표 모양을 만들기 위해 */
-  border-top: 5px solid #000; /* 화살표 색상 설정 */
-  pointer-events: none; /* 클릭 방지 */
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #000;
+  pointer-events: none;
 }
 
 .search-icon {
@@ -391,7 +384,7 @@ h2 {
   top: 50%;
   transform: translateY(-50%);
   color: #6c757d;
-  pointer-events: none; /* 아이콘이 입력을 방해하지 않도록 설정 */
+  pointer-events: none;
 }
 
 .search-btn {
@@ -412,8 +405,10 @@ h2 {
 /* 모바일 디바이스에 대한 스타일 */
 @media (max-width: 768px) {
   .search-container {
-    flex-direction: column; /* 요소들을 세로로 쌓이도록 설정 */
-    align-items: stretch; /* 각 요소가 부모 너비를 다 차지하도록 설정 */
+    flex-direction: column;
+    /* 요소들을 세로로 쌓이도록 설정 */
+    align-items: stretch;
+    /* 각 요소가 부모 너비를 다 차지하도록 설정 */
   }
 }
 </style>
