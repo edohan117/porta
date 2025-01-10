@@ -2,44 +2,20 @@
   <header :class="['header', { 'scrolled': isScrolled }]">
     <div class="container">
       <div class="logo">
-        <router-link to="/" class="logo-link">Fuse ESCAPE</router-link>
+        <router-link to="/" class="logo-link">Porta</router-link>
       </div>
       <nav class="nav">
-        <!-- 드롭다운 -->
-        <div class="dropdown">
-          <span 
-            class="nav-link dropdown-toggle" 
-            @click="toggleDropdown"
-          >
-            카테고리
-          </span>
-          <!-- 드롭다운 메뉴 -->
-          <ul 
-            class="dropdown-menu" 
-            v-if="dropdownOpen"
-          >
-            <li><router-link to="/category/news" class="dropdown-item" @click="closeDropdown">뉴스</router-link></li>
-            <li><router-link to="/category/shopping" class="dropdown-item" @click="closeDropdown">쇼핑</router-link></li>
-            <li><router-link to="/category/entertainment" class="dropdown-item" @click="closeDropdown">엔터테인먼트</router-link></li>
-            <li><router-link to="/category/learning" class="dropdown-item" @click="closeDropdown">학습 자료</router-link></li>
-          </ul>
-        </div>
-        <router-link to="/roomList" class="nav-link">추천</router-link>
-        <router-link to="/roomRank" class="nav-link">즐겨찾기</router-link>
+        <router-link to="/roomList" class="nav-link">카테고리</router-link>
+        <router-link to="/myLikes" class="nav-link">즐겨찾기</router-link>
+        <router-link to="/roomRank" class="nav-link">RANK</router-link>
         <router-link to="/noticeList" class="nav-link">공지사항</router-link>
-        <router-link to="/inquiries" class="nav-link">문의하기</router-link>
         <div v-if="roleAdmin">
           <router-link to="/inquiriesList" class="nav-link">문의목록</router-link>
         </div>
       </nav>
       <div class="search-bar">
-        <input
-          type="text"
-          v-model="searchQuery"
-          placeholder="검색어를 입력하세요"
-          class="search-input"
-          @keyup.enter="handleSearch"
-        />
+        <input type="text" v-model="searchQuery" placeholder="검색어를 입력하세요" class="search-input"
+          @keyup.enter="handleSearch" />
         <button @click="handleSearch" class="btn-search">검색</button>
       </div>
       <div class="auth">
@@ -82,11 +58,11 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-    
+
     const isLoggedIn = computed(() => store.getters.isAuthenticated);
     const user = computed(() => store.getters.user);
     const role = computed(() => store.getters.role);
-    
+
     const isMenuOpen = ref(false);
     const profileMenuOpen = ref(false);
     const isScrolled = ref(false);
@@ -157,9 +133,9 @@ export default {
       window.removeEventListener('click', handleClickOutside);
       window.removeEventListener('scroll', handleScroll);
     });
-    
+
     const toggleDropdown = () => {
-    dropdownOpen.value = !dropdownOpen.value;
+      dropdownOpen.value = !dropdownOpen.value;
     };
 
     const handleClickOutside = (event) => {
@@ -240,6 +216,9 @@ export default {
 .nav {
   display: flex;
   gap: 1rem;
+  /* 링크 간 간격 */
+  margin-left: 2rem;
+  /* 전체 메뉴를 살짝 오른쪽으로 이동 */
 }
 
 .nav-link {
@@ -427,16 +406,20 @@ export default {
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
-  flex-direction: column; /* 세로 정렬 */
-  width: 200px; /* 적당한 넓이 설정 */
+  flex-direction: column;
+  /* 세로 정렬 */
+  width: 200px;
+  /* 적당한 넓이 설정 */
 }
 
 .dropdown-item {
-  padding: 0.5rem 1rem; /* 상하 간격과 좌우 여백 설정 */
+  padding: 0.5rem 1rem;
+  /* 상하 간격과 좌우 여백 설정 */
   color: #fff;
   text-decoration: none;
   transition: background-color 0.3s ease;
-  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  white-space: nowrap;
+  /* 텍스트 줄바꿈 방지 */
 }
 
 .dropdown-item:hover {
@@ -445,16 +428,18 @@ export default {
 
 /* 드롭다운 메뉴 안의 텍스트를 중앙 정렬 */
 .dropdown-item {
-  text-align: left; /* 텍스트가 자연스럽게 좌측 정렬되도록 설정 */
-  display: block; /* 블록 레벨 요소로 변경 */
+  text-align: left;
+  /* 텍스트가 자연스럽게 좌측 정렬되도록 설정 */
+  display: block;
+  /* 블록 레벨 요소로 변경 */
 }
 
 /* 드롭다운 메뉴 간격 조정 */
 .dropdown-item:not(:last-child) {
-  border-bottom: 1px solid #444; /* 메뉴 항목 구분선 추가 */
+  border-bottom: 1px solid #444;
+  /* 메뉴 항목 구분선 추가 */
 }
 
-/* 검색창 스타일 */
 .search-bar {
   display: flex;
   align-items: center;
@@ -465,6 +450,8 @@ export default {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 300px;
+  box-sizing: border-box;
 }
 
 .btn-search {
@@ -479,6 +466,4 @@ export default {
 .btn-search:hover {
   background-color: #2980b9;
 }
-
-
 </style>
