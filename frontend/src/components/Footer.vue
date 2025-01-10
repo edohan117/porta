@@ -13,7 +13,7 @@
           <li><a href="/terms">이용 약관</a></li>
           <li><a href="/privacy">개인정보 처리방침</a></li>
           <li><a href="/support">고객 지원</a></li>
-          <router-link to="/inquiries" class="nav-link">문의하기</router-link>
+          <router-link to="/inquiries" class="nav-link">문의하기22</router-link>
         </ul>
       </div>
       <div class="footer-section social">
