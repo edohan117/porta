@@ -21,6 +21,7 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*.settings.json
 
 # application.properties 파일 제외
 application.properties
