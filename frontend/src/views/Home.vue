@@ -2,9 +2,9 @@
   <div class="home">
     <main class="main-content">
       <hero-section />
+      <user-pin />
       <high-view-count :highViewCount="highViewCount" />
       <recent-posts-main :recentPosts="recentPosts" />
-      <top-liked-posts :topLikedPosts="topLikedPosts" />
     </main>
   </div>
 </template>
@@ -12,9 +12,9 @@
 <script>
 import axios from 'axios';
 import HeroSection from '@/components/HeroSection.vue';
+import UserPin from '@/components/UserPin.vue';
 import HighViewCount from '@/components/HighViewCount.vue';
 import RecentPostsMain from '@/components/RecentPostsMain.vue';
-import TopLikedPosts from '@/components/TopLikedPosts.vue';
 
 export default {
   name: 'Home',
@@ -22,13 +22,12 @@ export default {
     HeroSection,
     HighViewCount,
     RecentPostsMain,
-    TopLikedPosts,
+    UserPin,
   },
   data() {
     return {
       highViewCount: [],
       recentPosts: [],
-      topLikedPosts: [],
     };
   },
   async mounted() {
@@ -39,7 +38,6 @@ export default {
       // 응답 데이터에서 필요한 정보를 추출하여 Vue 인스턴스의 데이터에 할당합니다
       this.highViewCount = data.highViewCount || [];
       this.recentPosts = data.recentPosts || [];
-      this.topLikedPosts = data.topLikedPosts || [];
     } catch (error) {
       console.error('데이터를 가져오는 중 오류가 발생했습니다:', error); // 에러 처리
     }

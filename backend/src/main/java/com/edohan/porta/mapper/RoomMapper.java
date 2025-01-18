@@ -2,8 +2,16 @@ package com.edohan.porta.mapper;
 
 import java.util.*;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+@Mapper
 public interface RoomMapper {
-    List<Map<String, Object>> roomList(String keyword, String  region, String  genre);
+    List<Map<String, Object>> roomList(
+        @Param("keyword") String keyword,
+        @Param("region") String region,
+        @Param("genre") String genre
+    );
     List<Map<String, Object>> myLikeList(String userId, String keyword, String  region, String  genre);
     List<Map<String, Object>> myRecordList(String userId, String keyword, String  region, String  genre);
     List<Map<String, Object>> newList();

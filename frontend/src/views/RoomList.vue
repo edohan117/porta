@@ -108,9 +108,9 @@ export default {
   methods: {
     fetchRoomList() {
       const params = {
-        keyword: this.searchKeyword.replace(/\s+/g, '') || '',  // 검색어가 없을 때는 빈 값
-        region: this.selectedRegion || '',  // 선택된 지역이 없을 때는 빈 값
-        genre: this.selectedGenre || '',    // 선택된 장르가 없을 때는 빈 값
+        keyword: this.searchKeyword.trim() || '',  // 공백 제거
+        region: this.selectedRegion || '',
+        genre: this.selectedGenre || '',
       };
 
       axios

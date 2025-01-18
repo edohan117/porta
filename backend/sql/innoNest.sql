@@ -32,11 +32,11 @@ CREATE TABLE IF NOT EXISTS `common_code` (
 
 -- 테이블 데이터 inno_nest.common_code:~58 rows (대략적) 내보내기
 REPLACE INTO `common_code` (`CODE_TYPE`, `CODE_VAL`, `CODE_NM`, `PARENT_CD`) VALUES
-	('AREA_CD', '101', '강남', '01'),
-	('AREA_CD', '102', '건대', '01'),
-	('AREA_CD', '103', '홍대', '01'),
-	('AREA_CD', '104', '대학로', '01'),
-	('AREA_CD', '105', '신촌', '01'),
+	('TAG_CD', '101', '강남', '01'),
+	('TAG_CD', '102', '건대', '01'),
+	('TAG_CD', '103', '홍대', '01'),
+	('TAG_CD', '104', '대학로', '01'),
+	('TAG_CD', '105', '신촌', '01'),
 	('AREA_CD', '106', '성수', '01'),
 	('AREA_CD', '107', '외대', '01'),
 	('AREA_CD', '108', '잠실', '01'),

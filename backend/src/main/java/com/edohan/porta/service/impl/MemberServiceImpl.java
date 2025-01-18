@@ -31,7 +31,7 @@ public class MemberServiceImpl implements MemberService {
 
         if (map != null && password.equals(map.get("PASSWORD"))) {
             rs.put("status", "success");
-            rs.put("nickname", map.get("USER_ID"));
+            rs.put("userId", map.get("USER_ID"));
             rs.put("username", map.get("USER_NM"));
             rs.put("nickname", map.get("NICK_NM"));
             rs.put("email", map.get("EMAIL"));
