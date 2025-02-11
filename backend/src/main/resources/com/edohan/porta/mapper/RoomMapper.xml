@@ -28,15 +28,15 @@
         FROM ESCAPE_ROOM_LIST A
         WHERE 1 = 1
         <if test="keyword != null and keyword != ''">
-            AND (REPLACE(A.ROOM_NM,' ','') LIKE CONCAT('%', #{keyword}, '%') 
-            OR REPLACE(A.THEME_NM,' ','') LIKE CONCAT('%', #{keyword}, '%') 
-            OR REPLACE(A.CONTENT,' ','') LIKE CONCAT('%', #{keyword}, '%'))
+            AND (REPLACE(A.ROOM_NM, ' ', '') LIKE CONCAT('%', #{keyword}, '%')
+            OR REPLACE(A.THEME_NM, ' ', '') LIKE CONCAT('%', #{keyword}, '%')
+            OR REPLACE(A.CONTENT, ' ', '') LIKE CONCAT('%', #{keyword}, '%'))
         </if>
         <if test="region != null and region != ''">
-            AND A.REGION_CD = #{region} 
+            AND A.REGION_CD = #{region}
         </if>
         <if test="genre != null and genre != ''">
-            AND A.GENRE_CD = #{genre} 
+            AND A.GENRE_CD = #{genre}
         </if>
     </select>
 

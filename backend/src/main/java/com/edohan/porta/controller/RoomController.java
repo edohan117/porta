@@ -127,8 +127,8 @@ public class RoomController {
     }
     
     // 아이디어 삭제
-    @DeleteMapping("/roomDelete/{id}")
-    public void deleteRoom(@PathVariable("id") int id) {
+    @DeleteMapping("/linkDelete/{id}")
+    public void deleteLink(@PathVariable("id") int id) {
         service.deleteRoom(id);
     }
     

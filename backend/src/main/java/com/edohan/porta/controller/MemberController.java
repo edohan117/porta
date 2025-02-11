@@ -49,8 +49,8 @@ public class MemberController {
             }
         }
         
-        @PostMapping("/login")
-        public Map<String, Object> login(@RequestBody Map<String, String> loginRequest, HttpSession session) {
+    @PostMapping("/login")
+    public Map<String, Object> login(@RequestBody Map<String, String> loginRequest, HttpSession session) {
         String userId = loginRequest.get("id");
         String password = loginRequest.get("password");
         try {

@@ -2,9 +2,9 @@
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-section brand">
-        <h3>Fuse</h3>
+        <h3>Porta</h3>
         <p>혁신적인 아이디어의 온상</p>
-        <p>Fuse에서 여러분의 창의력을 펼쳐보세요.</p>
+        <p>Porta 에서 여러분의 창의력을 펼쳐보세요.</p>
       </div>
       <div class="footer-section links">
         <h3>빠른 링크</h3>
@@ -12,7 +12,8 @@
           <li><a href="/sitemap">사이트맵</a></li>
           <li><a href="/terms">이용 약관</a></li>
           <li><a href="/privacy">개인정보 처리방침</a></li>
-          <li><a href="/support">고객 지원2</a></li>
+          <li><a href="/support">고객 지원</a></li>
+          <router-link to="/inquiries" class="nav-link">문의하기22</router-link>
         </ul>
       </div>
       <div class="footer-section social">
@@ -35,7 +36,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2024 Fuse. All rights reserved.</p>
+      <p>&copy; 2025 Porta. All rights reserved.</p>
     </div>
   </footer>
 </template>

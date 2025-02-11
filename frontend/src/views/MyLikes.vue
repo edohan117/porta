@@ -1,59 +1,14 @@
 <template>
   <section class="room-list">
     <h2>My Likes</h2>
-    <div class="search-container">
-      <div class="search-input-wrapper">
-        <input
-          type="text"
-          v-model="searchKeyword"
-          placeholder="검색어를 입력하세요"
-          class="search-input"
-          @keyup.enter="fetchRoomList"
-        />
-      </div>
-      <div class="select-wrapper">
-        <select v-model="selectedRegion" class="search-select">
-          <option value="">지역을 선택하세요</option>
-          <option v-for="region in regions" :key="region.CODE_VAL" :value="region.CODE_VAL">
-            {{ region.CODE_NM }}
-          </option>
-        </select>
-      </div>
-      <div class="select-wrapper">
-        <select v-model="selectedGenre" class="search-select">
-          <option value="">장르를 선택하세요</option>
-          <option v-for="genre in genres" :key="genre.CODE_VAL" :value="genre.CODE_VAL">
-            {{ genre.CODE_NM }}
-          </option>
-        </select>
-      </div>
-      <button @click="fetchRoomList" class="btn btn-primary search-btn">
-        검색
-      </button>
-    </div>
-
     <div class="room-grid">
-      <router-link
-        v-for="room in paginatedRooms"
-        :key="room.ID"
-        :to="{ name: 'RoomDetail', params: { id: room.ID } }"
-        class="room-card-link"
-      >
+      <router-link v-for="room in paginatedRooms" :key="room.ID" :to="{ name: 'RoomDetail', params: { id: room.ID } }"
+        class="room-card-link">
         <article class="room-card">
           <div class="room-image-container">
-            <img
-              v-if="room.IMG_PATH"
-              :src="room.IMG_PATH"
-              :alt="room.THEME_NM"
-              class="room-image"
-              @error="onImageError(room.ID)"
-            />
-            <img
-              v-else
-              src="/api/placeholder/150/150"
-              :alt="room.THEME_NM"
-              class="room-image placeholder"
-            />
+            <img v-if="room.IMG_PATH" :src="room.IMG_PATH" :alt="room.THEME_NM" class="room-image"
+              @error="onImageError(room.ID)" />
+            <img v-else src="/api/placeholder/150/150" :alt="room.THEME_NM" class="room-image placeholder" />
           </div>
           <div class="room-info">
             <h3 class="room-title">{{ room.THEME_NM }}</h3>
@@ -69,11 +24,7 @@
       </router-link>
     </div>
 
-    <Pagination
-      :currentPage="currentPage"
-      :totalPages="totalPages"
-      @page-changed="changePage"
-    />
+    <Pagination :currentPage="currentPage" :totalPages="totalPages" @page-changed="changePage" />
   </section>
 </template>
 
@@ -246,21 +197,28 @@ h2 {
 
 .room-image-container {
   flex-shrink: 0;
-  width: 100px;  /* 고정 너비 */
-  height: 150px; /* 고정 높이 */
-  overflow: hidden; /* 잘리지 않게 숨김 처리 */
-  border-radius: 12px; /* 컨테이너에 둥글게 하기 */
+  width: 100px;
+  /* 고정 너비 */
+  height: 150px;
+  /* 고정 높이 */
+  overflow: hidden;
+  /* 잘리지 않게 숨김 처리 */
+  border-radius: 12px;
+  /* 컨테이너에 둥글게 하기 */
 }
 
 .room-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 비율을 유지하며 잘림 */
-  border-radius: 12px; /* 이미지에 둥글게 하기 */
+  object-fit: cover;
+  /* 비율을 유지하며 잘림 */
+  border-radius: 12px;
+  /* 이미지에 둥글게 하기 */
 }
 
 .room-image.placeholder {
-  object-fit: contain; /* 기본 이미지 비율 유지 */
+  object-fit: contain;
+  /* 기본 이미지 비율 유지 */
   padding: 1rem;
   background-color: #f0f0f0;
 }
@@ -302,25 +260,31 @@ h2 {
 
 @media (max-width: 600px) {
   .room-card {
-    flex-direction: column; /* 모바일에서 세로로 쌓임 */
+    flex-direction: column;
+    /* 모바일에서 세로로 쌓임 */
   }
 
   .room-image-container {
-    width: 100%; /* 너비를 100%로 설정 */
-    height: 200px; /* 높이 조정 */
+    width: 100%;
+    /* 너비를 100%로 설정 */
+    height: 200px;
+    /* 높이 조정 */
   }
 
   .room-image {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 여기 수정 */
+    object-fit: contain;
+    /* 여기 수정 */
   }
 }
 
 .search-container {
   display: flex;
-  flex-wrap: wrap;  /* 요소들이 줄 바꿈 할 수 있도록 설정 */
-  gap: 2px;  /* 요소 간의 간격을 줄여서 겹침 방지 */
+  flex-wrap: wrap;
+  /* 요소들이 줄 바꿈 할 수 있도록 설정 */
+  gap: 2px;
+  /* 요소 간의 간격을 줄여서 겹침 방지 */
   margin-bottom: 30px;
   padding: 20px;
   background-color: #f8f9fa;
@@ -330,14 +294,18 @@ h2 {
 
 .search-input-wrapper,
 .select-wrapper {
-  flex: 1; /* 각 요소가 가능한 공간을 균등하게 차지 */
-  min-width: 150px; /* 최소 너비를 설정하여 너무 좁아지지 않도록 함 */
+  flex: 1;
+  /* 각 요소가 가능한 공간을 균등하게 차지 */
+  min-width: 150px;
+  /* 최소 너비를 설정하여 너무 좁아지지 않도록 함 */
   position: relative;
 }
 
 .search-input {
-  width: 84%; /* 너비를 100%로 설정 */
-  padding: 12px; /* 상하 패딩 */
+  width: 84%;
+  /* 너비를 100%로 설정 */
+  padding: 12px;
+  /* 상하 패딩 */
   border: 1px solid #ced4da;
   border-radius: 5px;
   font-size: 16px;
@@ -346,16 +314,22 @@ h2 {
 }
 
 .search-select {
-  width: 95%; /* 너비를 100%로 설정 */
-  padding: 12px; /* 상하 패딩 */
+  width: 95%;
+  /* 너비를 100%로 설정 */
+  padding: 12px;
+  /* 상하 패딩 */
   border: 1px solid #ced4da;
   border-radius: 5px;
   font-size: 16px;
   transition: border-color 0.3s;
-  -webkit-appearance: none; /* Safari 및 Chrome의 기본 스타일 제거 */
-  -moz-appearance: none; /* Firefox의 기본 스타일 제거 */
-  appearance: none; /* 모든 브라우저의 기본 스타일 제거 */
-  background-color: white; /* 배경 색 설정 (선택 사항) */
+  -webkit-appearance: none;
+  /* Safari 및 Chrome의 기본 스타일 제거 */
+  -moz-appearance: none;
+  /* Firefox의 기본 스타일 제거 */
+  appearance: none;
+  /* 모든 브라우저의 기본 스타일 제거 */
+  background-color: white;
+  /* 배경 색 설정 (선택 사항) */
 }
 
 .search-input:focus,
@@ -366,17 +340,25 @@ h2 {
 }
 
 .select-wrapper::after {
-  content: ''; /* 화살표 아이콘 대체 */
+  content: '';
+  /* 화살표 아이콘 대체 */
   position: absolute;
-  right: 30px; /* 오른쪽에서 간격 설정 */
-  top: 50%; /* 세로 중앙 정렬 */
-  transform: translateY(-50%); /* 세로 중앙 정렬 */
-  width: 0; 
-  height: 0; 
-  border-left: 5px solid transparent; /* 화살표 모양을 만들기 위해 */
-  border-right: 5px solid transparent; /* 화살표 모양을 만들기 위해 */
-  border-top: 5px solid #000; /* 화살표 색상 설정 */
-  pointer-events: none; /* 클릭 방지 */
+  right: 30px;
+  /* 오른쪽에서 간격 설정 */
+  top: 50%;
+  /* 세로 중앙 정렬 */
+  transform: translateY(-50%);
+  /* 세로 중앙 정렬 */
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  /* 화살표 모양을 만들기 위해 */
+  border-right: 5px solid transparent;
+  /* 화살표 모양을 만들기 위해 */
+  border-top: 5px solid #000;
+  /* 화살표 색상 설정 */
+  pointer-events: none;
+  /* 클릭 방지 */
 }
 
 .search-icon {
@@ -385,7 +367,8 @@ h2 {
   top: 50%;
   transform: translateY(-50%);
   color: #6c757d;
-  pointer-events: none; /* 아이콘이 입력을 방해하지 않도록 설정 */
+  pointer-events: none;
+  /* 아이콘이 입력을 방해하지 않도록 설정 */
 }
 
 .search-btn {
@@ -406,8 +389,10 @@ h2 {
 /* 모바일 디바이스에 대한 스타일 */
 @media (max-width: 768px) {
   .search-container {
-    flex-direction: column; /* 요소들을 세로로 쌓이도록 설정 */
-    align-items: stretch; /* 각 요소가 부모 너비를 다 차지하도록 설정 */
+    flex-direction: column;
+    /* 요소들을 세로로 쌓이도록 설정 */
+    align-items: stretch;
+    /* 각 요소가 부모 너비를 다 차지하도록 설정 */
   }
 }
 </style>

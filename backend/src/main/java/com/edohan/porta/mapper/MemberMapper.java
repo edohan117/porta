@@ -2,6 +2,8 @@ package com.edohan.porta.mapper;
 
 import java.util.*;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface MemberMapper {
 
     void insertMember(Map<String, String> member);
@@ -12,7 +14,7 @@ public interface MemberMapper {
 
     Map<String, Object> getProfile(String userId);
 
-    Map<String, Object> loginCheck(String userId, String password);
+    Map<String, Object> loginCheck(@Param("userId") String userId, @Param("password") String password);
     
     Integer checkIdExists(String id);
 }
